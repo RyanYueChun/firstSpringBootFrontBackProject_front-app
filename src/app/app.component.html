@@ -1,4 +1,18 @@
 <h1>{{title}}</h1>
 
-<p>Réponse du backend : <em>{{message.contents}}</em></p>
+<p>Réponse du backend, message : <em>{{message.contents}}</em></p>
+
+<p>Réponse du backend, greeting numéro <em>{{greeting.id}}</em> : <em>{{greeting.content}}</em></p>
+
+<div>
+    <label>name:
+      <input [(ngModel)]="userName" placeholder="name"/>
+    </label>
+    <button (click)="sendName()">Post</button>
+  </div>
+
+Logs :
+<li *ngFor="let log of logs">
+    <span>{{log}}</span>
+</li>
 
