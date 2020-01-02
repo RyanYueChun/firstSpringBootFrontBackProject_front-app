@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PostRequestsService } from './post-requests.service';
+import { PostRequests } from './post-requests.service';
 
-describe('PostRequestsService', () => {
+describe('PostRequests', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PostRequestsService = TestBed.get(PostRequestsService);
+    const service: PostRequests = TestBed.get(PostRequests);
     expect(service).toBeTruthy();
   });
 });

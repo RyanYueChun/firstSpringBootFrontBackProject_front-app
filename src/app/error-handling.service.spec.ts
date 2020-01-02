@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ErrorHandlingService } from './error-handling.service';
+import { ErrorHandling } from './error-handling.service';
 
-describe('ErrorHandlingService', () => {
+describe('ErrorHandling', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ErrorHandlingService = TestBed.get(ErrorHandlingService);
+    const service: ErrorHandling = TestBed.get(ErrorHandling);
     expect(service).toBeTruthy();
   });
 });

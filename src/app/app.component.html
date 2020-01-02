@@ -1,15 +1,49 @@
 <h1>{{title}}</h1>
 
-<p>Réponse du backend, message : <em>{{message.contents}}</em></p>
+<p>Message du backend : <em>{{message.contents}}</em></p>
 
-<p>Réponse du backend, greeting numéro <em>{{greeting.id}}</em> : <em>{{greeting.content}}</em></p>
+<p>Greeting numéro <em>{{greeting.id}}</em> : <em>{{greeting.content}}</em></p>
 
 <div>
-    <label>name:
-      <input [(ngModel)]="userName" placeholder="name"/>
-    </label>
-    <button (click)="sendName()">Post</button>
-  </div>
+  <label>name:
+    <input [(ngModel)]="userName" placeholder="name"/>
+  </label>
+  <button (click)="sendName()">Post</button>
+</div>
+<br>
+<br>
+
+<div>
+  <h1>Save books</h1>
+  <label>Id: <input [(ngModel)]="bookToSave.id" placeholder="id" required/></label>
+  <label>Title: <input [(ngModel)]="bookToSave.title" placeholder="title" required/></label>
+  <label>Author: <input [(ngModel)]="bookToSave.author" placeholder="author" required/></label>
+  <label>Release date: <input [(ngModel)]="bookToSave.releaseDate" placeholder="releaseDate" required/></label>
+  <button (click)="addBookToArray()">Add this book</button>
+  <button (click)="saveAllBooks()">Save all added books</button>
+</div>
+
+<div>
+  <h1>Fetched books : </h1>
+  <h2>Book id/title :</h2>
+  <li *ngFor="let book of booksFetched">
+    <p>{{book.id}}/{{book.title}}</p>
+  </li>
+  <label>Book to fetch by author: <input #authorToFetch type="text" placeholder="Search by author"/></label>
+  <button (click)="getBookByAuthor(authorToFetch.value)">Fetch by author</button>
+  <label>Book to fetch by title: <input #titleToFetch type="text" placeholder="Search by title"/></label>
+  <button (click)="getBookByTitle(titleToFetch.value)">Fetch by title</button>
+
+  <br>
+
+  <h2>Book info :</h2>
+  <h3>Id: {{bookFetched.id}}</h3>
+  <h3>Title: {{bookFetched.title}}</h3>
+  <h3>Author: {{bookFetched.author}}</h3>
+  <h3>Release date: {{bookFetched.releaseDate}}</h3>
+  <label>Id of book to fetch: <input #idToFetch type="text" placeholder="Search by Id"/></label>
+  <button (click)="getBookById(idToFetch.value)">Fetch by Id</button>
+</div>
 
 Logs :
 <li *ngFor="let log of logs">
