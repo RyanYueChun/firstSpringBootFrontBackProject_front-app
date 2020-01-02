@@ -15,11 +15,11 @@
 
 <div>
   <h1>Save books</h1>
-  <label>Id: <input [(ngModel)]="bookToSave.id" placeholder="id" required/></label>
+  <label>Id: <input [(ngModel)]="bookToSave.id" placeholder="id" type="number" required/></label>
   <label>Title: <input [(ngModel)]="bookToSave.title" placeholder="title" required/></label>
   <label>Author: <input [(ngModel)]="bookToSave.author" placeholder="author" required/></label>
   <label>Release date: <input [(ngModel)]="bookToSave.releaseDate" placeholder="releaseDate" required/></label>
-  <button (click)="addBookToArray()">Add this book</button>
+  <button (click)="addBookToMap()">Add this book</button>
   <button (click)="saveAllBooks()">Save all added books</button>
 </div>
 
@@ -29,10 +29,18 @@
   <li *ngFor="let book of booksFetched">
     <p>{{book.id}}/{{book.title}}</p>
   </li>
-  <label>Book to fetch by author: <input #authorToFetch type="text" placeholder="Search by author"/></label>
-  <button (click)="getBookByAuthor(authorToFetch.value)">Fetch by author</button>
-  <label>Book to fetch by title: <input #titleToFetch type="text" placeholder="Search by title"/></label>
-  <button (click)="getBookByTitle(titleToFetch.value)">Fetch by title</button>
+  <span>
+    <label>Book to fetch by author: <input #authorToFetch type="text" placeholder="Search by author"/></label>
+    <button (click)="getBookByAuthor(authorToFetch.value)">Fetch by author</button>
+  </span>
+  <span>
+    <label>Book to fetch by title: <input #titleToFetch type="text" placeholder="Search by title"/></label>
+    <button (click)="getBookByTitle(titleToFetch.value)">Fetch by title</button>
+  </span>
+  <span>
+    <label>Fetch all Books: </label>
+    <button (click)="getAllBooks()">Fetch all</button>
+  </span>
 
   <br>
 
@@ -41,8 +49,14 @@
   <h3>Title: {{bookFetched.title}}</h3>
   <h3>Author: {{bookFetched.author}}</h3>
   <h3>Release date: {{bookFetched.releaseDate}}</h3>
-  <label>Id of book to fetch: <input #idToFetch type="text" placeholder="Search by Id"/></label>
-  <button (click)="getBookById(idToFetch.value)">Fetch by Id</button>
+  <span>
+    <label>Id of book to fetch: <input #idToFetch type="text" placeholder="Fetch by Id"/></label>
+    <button (click)="getBookById(idToFetch.value)">Fetch by Id</button>
+  </span>
+  <span>
+    <label>Id of book to delete: <input #idToDelete type="text" placeholder="Delete by Id"/></label>
+    <button (click)="deleteBookById(idToDelete.value)">Delete by Id</button>
+  </span>
 </div>
 
 Logs :

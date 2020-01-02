@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { GetRequests } from './getRequests.service';
+import { GetRequests } from './services/getRequests.service';
 import { MessageFormat } from './model/MessageFormat';
 import { GreetingFormat } from './model/GreetingFormat';
-import { PostRequests } from './post-requests.service';
-import { ErrorHandling } from './error-handling.service';
+import { PostRequests } from './services/post-requests.service';
+import { ErrorHandling } from './services/error-handling.service';
 import { BookFormat } from './model/BookFormat';
+import { DeleteRequestsService } from './services/delete-requests.service';
 
 @Component({
   selector: 'app-root',
@@ -35,9 +36,9 @@ export class AppComponent {
     author: '',
     releaseDate: ''
   };
-  booksToSave: BookFormat[] = [];
+  bookMap: Map<number, BookFormat> = new Map();
 
-  constructor(private getRequests: GetRequests, private postRequests: PostRequests, private errorHandling: ErrorHandling) { }
+  constructor(private getRequests: GetRequests, private postRequests: PostRequests, private deleteRequests: DeleteRequestsService, private errorHandling: ErrorHandling) { }
 
   ngOnInit() {
     this.getMessage();
@@ -51,7 +52,7 @@ export class AppComponent {
 
   getGreeting() {
     this.getRequests.getGreeting()
-      .subscribe((data: GreetingFormat) => this.greeting = data)
+      .subscribe((data: GreetingFormat) => this.greeting = data);
   }
 
   getLogs() {
@@ -60,31 +61,58 @@ export class AppComponent {
 
   sendName() {
     this.postRequests.postGreeting(this.userName)
-      .subscribe((data: GreetingFormat) => this.greeting = data)
+      .subscribe((data: GreetingFormat) => this.greeting = data);
   }
 
-  addBookToArray() {
-    this.booksToSave.push(this.bookToSave);
+  assignBookValues(id: string, title: string, author, releaseDate: string): BookFormat {
+    let newBook: BookFormat = {
+      id: id,
+      title: title,
+      author: author,
+      releaseDate: releaseDate
+    }
+    return newBook;
+  }
+
+  addBookToMap() {
+    // Creating a new BookFormat object to prevent the "same" pointers issues
+    let newBook: BookFormat = new BookFormat(this.bookToSave.id, this.bookToSave.title, this.bookToSave.author, this.bookToSave.releaseDate);
+    this.bookMap.set(parseInt(this.bookToSave.id), newBook);
   }
 
   saveAllBooks() {
-    this.postRequests.postSaveAllBooks(this.booksToSave)
-      .subscribe((data: MessageFormat) => this.message = data)
+    let booksToSave: BookFormat[] = [];
+    this.bookMap.forEach(book => {
+      booksToSave.push(book);
+    });
+
+    this.postRequests.postSaveAllBooks(booksToSave)
+      .subscribe((data: MessageFormat) => this.message = data);
   }
 
   getBookById(id: string) {
     this.getRequests.getBookById(id)
-      .subscribe((data: BookFormat) => this.bookFetched = data)
+      .subscribe((data: BookFormat) => this.bookFetched = data);
   }
 
   getBookByAuthor(author: string) {
     this.getRequests.getBookByAuthor(author)
-      .subscribe((data: BookFormat[]) => this.booksFetched = data)
+      .subscribe((data: BookFormat[]) => this.booksFetched = data);
   }
 
   getBookByTitle(title: string) {
     this.getRequests.getBookByTitle(title)
-      .subscribe((data: BookFormat[]) => this.booksFetched = data)
+      .subscribe((data: BookFormat[]) => this.booksFetched = data);
+  }
+
+  getAllBooks() {
+    this.getRequests.getAllBooks()
+      .subscribe((data: any) => this.booksFetched = data.content);
+  }
+
+  deleteBookById(id: string) {
+    this.deleteRequests.deleteBookById(id)
+      .subscribe((data: MessageFormat) => this.message = data);
   }
 
 }

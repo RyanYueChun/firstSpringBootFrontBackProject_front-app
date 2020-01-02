@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { GreetingFormat } from './model/GreetingFormat';
-import { BookFormat } from './model/BookFormat';
+import { GreetingFormat } from '../model/GreetingFormat';
+import { BookFormat } from '../model/BookFormat';
 import { ErrorHandling } from './error-handling.service';
-import { MessageFormat } from './model/MessageFormat';
+import { MessageFormat } from '../model/MessageFormat';
 
 @Injectable({
   providedIn: 'root'

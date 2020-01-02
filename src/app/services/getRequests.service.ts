@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MessageFormat } from './model/MessageFormat';
-import { GreetingFormat } from './model/GreetingFormat';
-import { BookFormat } from './model/BookFormat';
+import { MessageFormat } from '../model/MessageFormat';
+import { GreetingFormat } from '../model/GreetingFormat';
+import { BookFormat } from '../model/BookFormat';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ErrorHandling } from './error-handling.service';
@@ -36,8 +36,10 @@ export class GetRequests {
     return this.http.get<GreetingFormat>(this.greetingUrl);
   }
 
-  getAllBooks() {
-    return this.http.get<Iterable<BookFormat>>(this.baseBooksUrl + this.getAllUrl);
+  getAllBooks(): Observable<any> {
+    return this.http.get<any>(this.baseBooksUrl + this.getAllUrl).pipe(
+      catchError(this.errorHandling.handleError<any>('getAllBooks', this.emptyBooks))
+    );
   }
 
   getBookById(id: string): Observable<BookFormat> {
